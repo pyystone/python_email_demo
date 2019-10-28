@@ -70,8 +70,18 @@ class EmailInfo:
 
     def __init__(self, sender: Email, receivers: Receivers, title, message
                  , files=[], message_type=MESSAGE_TYPE_PLAIN):
+        # 空值检查
+        if len(title) == 0:
+            raise MyEmailException(MyEmailException.Error.EXCEPTION_TITLE_EMPTY)
+        if len(message) == 0:
+            raise MyEmailException(MyEmailException.Error.EXCEPTION_MESSAGE_EMPTY)
+
         self.sender = sender
+        self.check_sender()
+
         self.receivers = receivers
+        self.check_receivers()
+
         self.title = title
         self.message = Header(message, 'utf-8')
         self.message_type = message_type
@@ -80,23 +90,12 @@ class EmailInfo:
             email_files.append(EmailFile(item))
         self.files = email_files
 
-    # 检查数据合法性
-    def check_info(self) -> bool:
-        # 空值检查
-        if len(self.title) == 0:
-            raise MyEmailException(MyEmailException.Error.EXCEPTION_TITLE_EMPTY)
-        if len(self.message) == 0:
-            raise MyEmailException(MyEmailException.Error.EXCEPTION_MESSAGE_EMPTY)
-        self.check_sender()
-        self.check_receivers()
-        return True
-
     # 发送邮箱内容检查
     def check_sender(self):
         if self.sender is None:
             raise MyEmailException(MyEmailException.Error.EXCEPTION_SENDER_EMPTY)
 
-        if 'address' not in self.sender:
+        if len(self.sender.address) == 0:
             raise MyEmailException(MyEmailException.Error.EXCEPTION_SENDER_ADDRESS_MISS)
         else:
             address = self.sender.address
