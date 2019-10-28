@@ -24,12 +24,12 @@ def start_task():
     sender = Email(EmailSMTPServer.user, '发送测试')
 
     receivers = Receivers()
-    receivers.emails = [Email('xxxx@xx.com', '测试啦'),Email('xxxx@xx.com', '测试啦2')]
+    receivers.emails = [Email('xx@xx.com', '测试啦')]
 
     message = "这是测试内容"
     title = "这是测试标题"
 
-    send_email(EmailInfo(sender, receivers, title, message))
+    send_email(EmailInfo(sender, receivers, title, message, ['test.txt', '2.txt']))
 
 
 if __name__ == '__main__':

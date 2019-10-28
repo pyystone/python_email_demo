@@ -1,7 +1,9 @@
 import re
+import os
 from tools.email.my_email_exception import MyEmailException
 from email.utils import parseaddr, formataddr
 from email.header import Header
+from email.mime.text import MIMEText
 
 MESSAGE_TYPE_PLAIN = "plain"
 MESSAGE_TYPE_HTML = "html"
@@ -11,6 +13,7 @@ class Email:
     def __init__(self, address, nick_name=""):
         self.address = address
         self.nick_name = nick_name
+
     address = ""
     nick_name = ""
 
@@ -36,8 +39,22 @@ class Receivers:
         return address_list
 
 
-class EmailInfo:
+class EmailFile:
+    file_path = ""
 
+    def __init__(self, file_path):
+        self.file_path = file_path
+        if not os.path.exists(self.file_path):
+            raise MyEmailException(MyEmailException.Error.EXCEPTION_FILE_NOT_FOUNT, "文件地址:" + self.file_path)
+
+    def get_attr(self):
+        att = MIMEText(open(self.file_path, 'rb').read(), 'base64', 'utf-8')
+        att['Content-Type'] = 'applivation/octet-stream'
+        att['Content-Disposition'] = 'attachment; filename="%s"' % self.file_path.split("/")[-1]
+        return att
+
+
+class EmailInfo:
     # 发送邮箱信息 Email对象
     sender = None
     # 接收邮箱信息 Email数组
@@ -52,13 +69,16 @@ class EmailInfo:
     files = []
 
     def __init__(self, sender: Email, receivers: Receivers, title, message
-                 , message_type=MESSAGE_TYPE_PLAIN, files=[]):
+                 , files=[], message_type=MESSAGE_TYPE_PLAIN):
         self.sender = sender
         self.receivers = receivers
         self.title = title
         self.message = Header(message, 'utf-8')
         self.message_type = message_type
-        self.files = files
+        email_files = []
+        for item in files:
+            email_files.append(EmailFile(item))
+        self.files = email_files
 
     # 检查数据合法性
     def check_info(self) -> bool:
