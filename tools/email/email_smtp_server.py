@@ -1,8 +1,6 @@
 import os
 import json
 
-from tools.my_log import MyLog
-
 
 class EmailSMTPServer:
 
