@@ -14,7 +14,7 @@ class MyEmailException(BaseException):
 
         # <editor-fold desc="发送邮箱信息错误">
         # 发送信息错误 10110
-        10120EXCEPTION_SENDER_EMPTY = 10110
+        EXCEPTION_SENDER_EMPTY = 10110
         EXCEPTION_MESSAGE[EXCEPTION_SENDER_EMPTY] = '发送信息为空'
 
         EXCEPTION_SENDER_ADDRESS_MISS = 10111
