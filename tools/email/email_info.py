@@ -111,7 +111,7 @@ class EmailInfo:
         for item in self.receivers.emails:
 
             if len(item.address) == 0:
-                raise MyEmailException(MyEmailException.Error.EXCEPTION_SENDER_ADDRESS_MISS)
+                raise MyEmailException(MyEmailException.Error.EXCEPTION_RECEIVERS_ADDRESS_MISS)
             else:
                 address = item.address
                 emailRex = r'^[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+){0,4}@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+){0,4}$'
