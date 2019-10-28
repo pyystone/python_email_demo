@@ -1,16 +1,18 @@
 import os
 import json
 
+DEFAULT_SSL_PORT = 465
+
 
 class EmailSMTPServer:
 
     host = ''
     user = ''
     pwd = ''
-    port = 465
+    port = DEFAULT_SSL_PORT
 
     @staticmethod
-    def init(host, user, pwd, port=465):
+    def init(host, user, pwd, port=DEFAULT_SSL_PORT):
         EmailSMTPServer.user = user
         EmailSMTPServer.host = host
         EmailSMTPServer.pwd = pwd
@@ -28,6 +30,6 @@ class EmailSMTPServer:
                     if 'port' in data:
                         EmailSMTPServer.port = data['port']
                     else:
-                        EmailSMTPServer.port = 25
+                        EmailSMTPServer.port = DEFAULT_SSL_PORT
             except Exception as e:
                 print("打开文件错误!" + str(e))
