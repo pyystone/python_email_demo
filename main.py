@@ -29,7 +29,7 @@ def start_task():
     message = "这是测试内容"
     title = "这是测试标题"
 
-    send_email(EmailInfo(sender, receivers, title, message, ['test.txt', '2.txt']))
+    send_email(EmailInfo(sender, receivers, title, message, ['test1.txt', '2.txt']))
 
 
 if __name__ == '__main__':

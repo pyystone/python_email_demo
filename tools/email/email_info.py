@@ -45,7 +45,7 @@ class EmailFile:
     def __init__(self, file_path):
         self.file_path = file_path
         if not os.path.exists(self.file_path):
-            raise MyEmailException(MyEmailException.Error.EXCEPTION_FILE_NOT_FOUNT, "文件地址:" + self.file_path)
+            raise MyEmailException(MyEmailException.Error.EXCEPTION_FILE_NOT_FOUNT, '文件地址:%s' % self.file_path)
 
     def get_attr(self):
         att = MIMEText(open(self.file_path, 'rb').read(), 'base64', 'utf-8')
