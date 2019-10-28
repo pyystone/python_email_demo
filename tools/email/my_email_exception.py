@@ -9,6 +9,9 @@ class MyEmailException(BaseException):
 
         self.message += message
 
+    def __str__(self):
+        return "code: %s , message: %s" % (self.code, self.message)
+
     class Error:
         EXCEPTION_MESSAGE = {}
 
